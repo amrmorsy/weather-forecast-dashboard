@@ -1,8 +1,9 @@
-const GeolocationButton = ({ onLocate }) => (
-    <button onClick={onLocate} className="geo-location-btn bg-green-500 text-white p-2">
-      Use My Location
-    </button>
-  );
-  
-  export default GeolocationButton;
-  
+interface GeolocationButtonProps {
+  onLocate: () => void;
+}
+
+const GeolocationButton: React.FC<GeolocationButtonProps> = ({ onLocate }) => (
+  <button className="geo-location-btn" onClick={onLocate}>📍 Use My Location</button>
+);
+
+export default GeolocationButton;

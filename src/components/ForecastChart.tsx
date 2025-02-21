@@ -7,20 +7,25 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from "chart.js";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const ForecastChart = ({ forecast }) => {
+interface ForecastChartProps {
+  forecast: {
+    list: { dt: number; main: { temp: number }; pop: number }[];
+  };
+}
+
+const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
   if (!forecast) return null;
 
-  // Extract and format data
-  const labels = forecast.list.map((entry) =>
+  const labels = forecast.list.map((entry: { dt: number }) =>
     new Date(entry.dt * 1000).toLocaleDateString("en-US", { weekday: "short", hour: "2-digit" })
   );
-  const temperatures = forecast.list.map((entry) => entry.main.temp);
-  const precipitation = forecast.list.map((entry) => entry.pop * 100); // Convert to percentage
+  const temperatures = forecast.list.map((entry: { main: { temp: number } }) => entry.main.temp);
+  const precipitation = forecast.list.map((entry: { pop: number }) => entry.pop * 100);
 
   const tempData = {
     labels,
@@ -54,7 +59,7 @@ const ForecastChart = ({ forecast }) => {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-      legend: { display: true, position: "top" },
+      legend: { display: true, position: "top" as const },
       tooltip: { enabled: true },
       title: {
         display: true,

@@ -6,7 +6,7 @@ import ForecastChart from "../components/ForecastChart";
 import GeolocationButton from "../components/GeolocationButton";
 
 const Home = () => {
-  const [city, setCity] = useState<string | null>(null);
+  const [city, setCity] = useState<string | undefined>(undefined);
   const geolocation = useGeolocation();
   const { forecast, loading, locationName } = useWeather(city, geolocation);
 
