@@ -1,16 +1,17 @@
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend);
 
 interface ForecastChartProps {
   forecast: {
@@ -21,11 +22,11 @@ interface ForecastChartProps {
 const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
   if (!forecast) return null;
 
-  const labels = forecast.list.map((entry: { dt: number }) =>
+  const labels = forecast.list.map((entry) =>
     new Date(entry.dt * 1000).toLocaleDateString("en-US", { weekday: "short", hour: "2-digit" })
   );
   const temperatures = forecast.list.map((entry) => entry.main.temp);
-  const precipitation = forecast.list.map((entry: { pop: number }) => entry.pop * 100);
+  const precipitation = forecast.list.map((entry) => entry.pop * 100); // Convert to percentage
 
   const tempData = {
     labels,
@@ -37,6 +38,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
         backgroundColor: "rgba(0, 0, 255, 0.1)",
         pointRadius: 5,
         pointBackgroundColor: "blue",
+        yAxisID: "y-temp",
       },
     ],
   };
@@ -47,15 +49,15 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       {
         label: "Chance of Precipitation (%)",
         data: precipitation,
-        borderColor: "green",
-        backgroundColor: "rgba(0, 255, 0, 0.1)",
-        pointRadius: 5,
-        pointBackgroundColor: "green",
+        backgroundColor: "rgba(0, 128, 0, 0.5)", // Green bars
+        borderColor: "rgba(0, 128, 0, 1)",
+        borderWidth: 1,
+        yAxisID: "y-precip",
       },
     ],
   };
 
-  const options = {
+  const tempOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -63,7 +65,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       tooltip: { enabled: true },
       title: {
         display: true,
-        text: "5-Day Weather Forecast",
+        text: "Temperature Forecast",
         font: { size: 16 },
       },
     },
@@ -74,17 +76,32 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       },
       y: {
         title: { display: true, text: "Temperature (°F)", font: { size: 14 } },
+        id: "y-temp",
       },
     },
   };
 
   const precipitationOptions = {
-    ...options,
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: true, position: "top" as const },
+      tooltip: { enabled: true },
+      title: {
+        display: true,
+        text: "Chance of Precipitation",
+        font: { size: 16 },
+      },
+    },
     scales: {
-      x: options.scales.x,
+      x: {
+        title: { display: true, text: "Date & Time", font: { size: 14 } },
+        ticks: { maxRotation: 45, minRotation: 0 },
+      },
       y: {
-        title: { display: true, text: "Chance of Precipitation (%)", font: { size: 14 } },
+        title: { display: true, text: "Precipitation Chance (%)", font: { size: 14 } },
         suggestedMax: 100,
+        id: "y-precip",
       },
     },
   };
@@ -92,12 +109,10 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
   return (
     <div>
       <div className="chart-container">
-        <h3>Temperature Forecast</h3>
-        <Line data={tempData} options={options} />
+        <Line data={tempData} options={tempOptions} />
       </div>
       <div className="chart-container">
-        <h3>Chance of Precipitation</h3>
-        <Line data={precipitationData} options={precipitationOptions} />
+        <Bar data={precipitationData} options={precipitationOptions} />
       </div>
     </div>
   );
