@@ -1,5 +1,10 @@
 {
   "files": [],
+  "compilerOptions": {
+    "types": [
+      "cypress"
+    ]
+  },
   "references": [
     {
       "path": "./tsconfig.app.json"
