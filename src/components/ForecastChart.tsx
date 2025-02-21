@@ -24,14 +24,14 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
   const labels = forecast.list.map((entry: { dt: number }) =>
     new Date(entry.dt * 1000).toLocaleDateString("en-US", { weekday: "short", hour: "2-digit" })
   );
-  const temperatures = forecast.list.map((entry: { main: { temp: number } }) => entry.main.temp);
+  const temperatures = forecast.list.map((entry) => entry.main.temp);
   const precipitation = forecast.list.map((entry: { pop: number }) => entry.pop * 100);
 
   const tempData = {
     labels,
     datasets: [
       {
-        label: "Temperature (°C)",
+        label: "Temperature (°F)",
         data: temperatures,
         borderColor: "blue",
         backgroundColor: "rgba(0, 0, 255, 0.1)",
@@ -73,7 +73,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
         ticks: { maxRotation: 45, minRotation: 0 },
       },
       y: {
-        title: { display: true, text: "Temperature (°C)", font: { size: 14 } },
+        title: { display: true, text: "Temperature (°F)", font: { size: 14 } },
       },
     },
   };

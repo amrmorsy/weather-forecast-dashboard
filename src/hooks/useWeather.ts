@@ -14,8 +14,9 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
     setLoading(true);
     const fetchWeather = async () => {
       const url = city
-        ? `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${API_KEY}`
-        : `https://api.openweathermap.org/data/2.5/forecast?lat=${coords?.lat}&lon=${coords?.lon}&units=metric&appid=${API_KEY}`;
+        ? `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${API_KEY}`
+        : `https://api.openweathermap.org/data/2.5/forecast?lat=${coords?.lat}&lon=${coords?.lon}&units=imperial&appid=${API_KEY}`;
+
 
       try {
         const { data } = await axios.get(url);
