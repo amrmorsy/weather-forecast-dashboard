@@ -8,14 +8,14 @@ import GeolocationButton from "../components/GeolocationButton";
 const Home = () => {
   const [city, setCity] = useState<string | undefined>(undefined);
   const geolocation = useGeolocation();
-  const { forecast, loading, locationName } = useWeather(city, geolocation);
+  const { forecast, loading, locationName } = useWeather(city, geolocation ?? undefined);
 
   return (
     <div className="container">
       <h1>🌤 Weather Forecast</h1>
       <div className="search-container">
         <SearchBar onSearch={setCity} />
-        <GeolocationButton onLocate={() => setCity(null)} />
+        <GeolocationButton onLocate={() => setCity(undefined)} />
       </div>
 
       {loading ? (
