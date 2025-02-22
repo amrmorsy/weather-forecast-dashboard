@@ -88,7 +88,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       legend: { display: true, position: "top" as const },
       tooltip: {
         enabled: true,
-        mode: "nearest",
+        mode: "nearest" as const,
         intersect: false,
       },
       title: {
@@ -98,7 +98,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       },
     },
     hover: {
-      mode: "nearest",
+      mode: "nearest" as const,
       intersect: false,
     },
     scales: {
@@ -126,7 +126,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       legend: { display: true, position: "top" as const },
       tooltip: {
         enabled: true,
-        mode: "nearest",
+        mode: "nearest" as const,
         intersect: false,
       },
       title: {
@@ -136,7 +136,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       },
     },
     hover: {
-      mode: "nearest",
+      mode: "nearest" as const,
       intersect: false,
     },
     scales: {
@@ -165,7 +165,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       legend: { display: true, position: "top" as const },
       tooltip: {
         enabled: true,
-        mode: "nearest",
+        mode: "nearest" as const,
         intersect: false,
       },
       title: {
@@ -175,7 +175,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       },
     },
     hover: {
-      mode: "nearest",
+      mode: "nearest" as const,
       intersect: false,
     },
     scales: {

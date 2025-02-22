@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  weather-app:
+    build:
+      context: .
+      args:
+        VITE_OPENWEATHER_API_KEY: ${VITE_OPENWEATHER_API_KEY}
+    ports:
+      - "5174:80"
+    restart: always
+    env_file:
+      - .env
