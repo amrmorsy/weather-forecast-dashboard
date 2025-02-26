@@ -26,7 +26,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       );
 
       if (response.data) {
-        setSuggestions(response.data.map((item: any) => `${item.name}, ${item.country}`));
+        setSuggestions(
+          response.data.map((item: any) => 
+            `${item.name}, ` + 
+            (item?.state && item.state !== item.name ? `${item.state}, ` : '') + 
+            `${item.country}`
+          )
+        );
+        
         setSelectedIndex(-1); // Reset selection index when new suggestions appear
       }
     } catch (error) {
