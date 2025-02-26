@@ -11,6 +11,9 @@ RUN npm install
 # Copy the rest of the project files
 COPY . .
 
+ARG VITE_OPENWEATHER_API_KEY
+ENV VITE_OPENWEATHER_API_KEY=$VITE_OPENWEATHER_API_KEY
+
 # Build the React app
 RUN npm run build 
 
