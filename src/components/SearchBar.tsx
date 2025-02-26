@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react"; // Removed useEffect
 import axios from "axios";
+
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
