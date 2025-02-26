@@ -3,9 +3,17 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY; // Load API key from .env
 
+interface WeatherData {
+  weather: { icon: string; description: string }[];
+  main: { temp: number };
+  name: string;
+  sys: { country: string };
+}
+
+
 export const useWeather = (city?: string, coords?: { lat: number; lon: number }) => {
   const [forecast, setForecast] = useState(null);
-  const [currentWeather, setCurrentWeather] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [locationName, setLocationName] = useState<string | null>(null); // Store city/location name
   const [country, setCountryName] = useState<string | null>(null); // Store country name
