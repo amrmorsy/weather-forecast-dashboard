@@ -5,7 +5,10 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY; // Load API key from .
 
 interface WeatherData {
   weather: { icon: string; description: string }[];
-  main: { temp: number };
+  main: {
+    temp_min: number;
+    temp_max: number; temp: number
+  };
   name: string;
   sys: { country: string };
 }

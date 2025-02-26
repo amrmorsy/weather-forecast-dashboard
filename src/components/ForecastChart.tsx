@@ -16,31 +16,48 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 interface ForecastChartProps {
   forecast: {
-    list: { dt: number; main: { temp: number }; pop: number; snow?: { "3h"?: number } }[];
+    list: { dt: number; main: {
+      temp_max: number;
+      temp_min: number; temp: number 
+}; pop: number; snow?: { "3h"?: number } }[];
   };
 }
 
 const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
   
   const { theme } = useTheme();
-  console.log(theme)
+  
   if (!forecast) return null;
 
 
   const labels = forecast.list.map((entry) =>
     new Date(entry.dt * 1000).toLocaleDateString("en-US", { weekday: "short", hour: "2-digit" })
   );
-  const temperatures = forecast.list.map((entry) => entry.main.temp);
+  // const temperatures = forecast.list.map((entry) => entry.main.temp);
   const precipitation = forecast.list.map((entry) => entry.pop * 100); // Convert to percentage
   const snowfall = forecast.list.map((entry) => (entry.snow && entry.snow["3h"] ? entry.snow["3h"] : 0)); // Snowfall in mm
+
+  const minTemperatures = forecast.list.map((entry) => entry.main.temp_min);
+  const maxTemperatures = forecast.list.map((entry) => entry.main.temp_max);
 
   const tempData = {
     labels,
     datasets: [
       {
-        label: "Temperature (°F)",
-        data: temperatures,
-        borderColor: theme == "light" ? "blue" : "#7ed6df",
+        label: "Max Temperature (°F)",
+        data: maxTemperatures,
+        borderColor: theme == "light" ? "#d35400" : "#e67e22",
+        backgroundColor: theme == "light" ? "rgba(0, 0, 255, 0.1)" : "rgba(153, 255, 0, 0.31)",
+        pointRadius: 3,
+        pointHoverRadius: 10,
+        pointBackgroundColor: theme == "light" ? "blue" : "#c7ecee",
+        pointHoverBackgroundColor: "red",
+        yAxisID: "y-temp",
+      },
+      {
+        label: "Min Temperature (°F)",
+        data: minTemperatures,
+        borderColor: theme == "light" ? "#0984e3" : "#1abc9c",
         backgroundColor: theme == "light" ? "rgba(0, 0, 255, 0.1)" : "rgba(153, 255, 0, 0.31)",
         pointRadius: 3,
         pointHoverRadius: 10,
@@ -93,7 +110,7 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
       },
       title: {
         display: true,
-        text: "Temperature Forecast",
+        text: "Temperature Forecast (High & Low)",
         font: { size: 16 },
       },
     },

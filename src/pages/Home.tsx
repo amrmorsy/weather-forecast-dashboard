@@ -31,6 +31,7 @@ const Home = () => {
             />
             <div>
               <h3>{Math.round(currentWeather.main.temp)}°F</h3>
+              <p>L: {Math.round(currentWeather.main.temp_min)}° H:{Math.round(currentWeather.main.temp_max)}°</p>
               <p>{currentWeather.weather[0].description}</p>
             </div>
           </div>
