@@ -5,9 +5,10 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY; // Load API key from .
 
 export const useWeather = (city?: string, coords?: { lat: number; lon: number }) => {
   const [forecast, setForecast] = useState(null);
+  const [currentWeather, setCurrentWeather] = useState(null);
   const [loading, setLoading] = useState(false);
   const [locationName, setLocationName] = useState<string | null>(null); // Store city/location name
-  const [countryName, setCountryName] = useState<string | null>(null); // Store country name
+  const [country, setCountryName] = useState<string | null>(null); // Store country name
 
   useEffect(() => {
     if (!city && !coords) return;
@@ -24,6 +25,15 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
         setForecast(data);
         setLocationName(data.city.name); // Extract the city name from API response
         setCountryName(data.city?.country ?? null);
+
+        // Fetch current weather
+        const currentWeatherUrl = city
+          ? `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${API_KEY}`
+          : `https://api.openweathermap.org/data/2.5/weather?lat=${coords?.lat}&lon=${coords?.lon}&units=imperial&appid=${API_KEY}`;
+
+        const currentRes = await axios.get(currentWeatherUrl);
+        setCurrentWeather(currentRes.data);
+
       } catch (error) {
         console.error("Error fetching weather:", error);
       } finally {
@@ -34,5 +44,5 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
     fetchWeather();
   }, [city, coords]);
 
-  return { forecast, loading, locationName, countryName }; // Return location name
+  return { forecast, currentWeather, loading, locationName, country }; // Return location name
 };
