@@ -42,7 +42,7 @@ const Home = () => {
       ) : (
         forecast && (
           <>
-            <h2>{locationName}{country && <span>, {country}</span>}</h2> {/* Display the location name */}
+            {/* <h2>{locationName}{country && <span>, {country}</span>}</h2> Display the location name */}
             <div className="chart-container-wrapper">
               <ForecastChart forecast={forecast} />
             </div>
