@@ -18,7 +18,6 @@
   --chart-bg: #333;
 }
 
-
 /* Global styles */
 body {
   font-family: Arial, sans-serif;
@@ -38,8 +37,8 @@ body {
   position: relative;
   width: 100%;
   max-width: 95vw;
-  margin-top:20px;
-  margin-bottom:20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   background: var(--container-bg);
   padding: 0px;
   margin: 0 auto;
@@ -47,10 +46,10 @@ body {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.themeToggleBtn{
-  position: absolute; 
-  top:20px;
-  left:20px;
+.themeToggleBtn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 /* Input and Button */
@@ -71,7 +70,7 @@ body {
 
 .suggestions-list {
   position: absolute;
-  top:50px;
+  top: 50px;
   width: 100%;
   background: var(--container-bg);
   border: 1px solid #ccc;
@@ -97,14 +96,19 @@ body {
   color: var(--button-text);
 }
 
+.weather-icon {
+  max-width: 30%;
+  margin: 0 auto;
+}
+
 input {
   /* max-width:94vw; */
   /* min-height: 32px; */
   /* width: 100%; */
-    padding: 15px 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
+  padding: 15px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 h2 {
@@ -134,33 +138,28 @@ button:hover {
   height: 500px;
   background: var(--chart-bg);
   border-radius: 8px;
-  margin-bottom:80px;
+  margin-bottom: 80px;
 }
 
-
-.geo-location-btn{
-  margin-top:-15px;
+.geo-location-btn {
+  margin-top: -15px;
 }
-
-
-
 
 /* Responsive Layout */
 @media (min-width: 768px) {
-
-  .container{
+  .container {
     /* width: 100%; */
-   max-width: 800px;
-   /* padding: 0px; */
-   padding: 20px 20px;
+    max-width: 800px;
+    /* padding: 0px; */
+    padding: 20px 20px;
   }
 
   input {
-    padding:10px;
-    width:100%
+    padding: 10px;
+    width: 100%;
   }
 
-  body{
+  body {
     display: flex;
   }
 
@@ -168,9 +167,9 @@ button:hover {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    flex:1;
+    flex: 1;
   }
-/* 
+  /* 
   input {
     flex: 1;
   } */

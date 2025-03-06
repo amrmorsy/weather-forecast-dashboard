@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import ForecastChart from "../components/ForecastChart";
 import GeolocationButton from "../components/GeolocationButton";
 import ThemeToggle from "../components/ThemeToggle";
+import WeatherIcon from '../components/WeatherIcon';
 
 const Home = () => {
   const [city, setCity] = useState<string | undefined>(undefined);
@@ -25,10 +26,11 @@ const Home = () => {
         <div className="current-weather">
           <h2>{locationName}, {country}</h2>
           <div className="weather-info">
-            <img 
+            {/* <img 
               src={`https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`} 
               alt={currentWeather.weather[0].description}
-            />
+            /> */}
+            <WeatherIcon iconCode={currentWeather.weather[0].icon} description={currentWeather.weather[0].description}/>
             <div>
               <h3>{Math.round(currentWeather.main.temp)}°F</h3>
               <p>L: {Math.round(currentWeather.main.temp_min)}° H:{Math.round(currentWeather.main.temp_max)}°</p>
