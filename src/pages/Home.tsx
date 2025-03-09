@@ -6,6 +6,7 @@ import ForecastChart from "../components/ForecastChart";
 import GeolocationButton from "../components/GeolocationButton";
 import ThemeToggle from "../components/ThemeToggle";
 import WeatherIcon from '../components/WeatherIcon';
+import { Analytics } from '@vercel/analytics/react';
 
 const Home = () => {
   const [city, setCity] = useState<string | undefined>(undefined);
@@ -52,6 +53,7 @@ const Home = () => {
           </>
         )
       )}
+      <Analytics/>
     </div>
   );
 };
