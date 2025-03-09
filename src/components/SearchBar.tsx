@@ -48,7 +48,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     fetchSuggestions(value);
   };
 
-  // Handle key navigation (Arrow Up, Arrow Down, Tab, Enter)
+  // Handle key navigation (Arrow Up, Arrow Down, Tab, Enter, Escape)
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (suggestions.length === 0) return;
 
@@ -62,7 +62,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     } else if (e.key === "Enter") {
       if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
         handleSelect(suggestions[selectedIndex]);
+      }else {
+        onSearch(city);
       }
+      setSuggestions([]); // Close dropdown after selecting
+    }else if (e.key == "Escape"){
+      setSuggestions([]); // Close dropdown when escape is pressed
     }
   };
 
@@ -84,7 +89,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="Enter city"
         className="search-input"
       />
-      <button onClick={() => onSearch(city)}>Search</button>
+      {/* <button onClick={() => onSearch(city)}>Search</button> */}
 
       {/* Autocomplete dropdown */}
       {suggestions.length > 0 && (
