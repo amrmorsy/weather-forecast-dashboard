@@ -1,6 +1,8 @@
 # Weather Forecast Dashboard
 
-React + TypeScript + Vite
+* React + TypeScript + Vite
+* OpenWeather API
+
 
 ```shell
 npm install
