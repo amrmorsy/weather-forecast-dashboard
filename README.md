@@ -1,6 +1,6 @@
-# React + TypeScript + Vite
+# Weather Forecast Dashboard
 
-Weather Forecast Dashboard
+React + TypeScript + Vite
 
 ```shell
 npm install
