@@ -89,7 +89,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         placeholder="Enter city"
         className="search-input"
       />
-      {/* <button onClick={() => onSearch(city)}>Search</button> */}
 
       {/* Autocomplete dropdown */}
       {suggestions.length > 0 && (
