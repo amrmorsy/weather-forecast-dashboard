@@ -16,17 +16,19 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarEleme
 
 interface ForecastChartProps {
   forecast: {
-    list: { dt: number; main: {
-      temp_max: number;
-      temp_min: number; temp: number 
-}; pop: number; snow?: { "3h"?: number } }[];
+    list: {
+      dt: number; main: {
+        temp_max: number;
+        temp_min: number; temp: number
+      }; pop: number; snow?: { "3h"?: number }
+    }[];
   };
 }
 
 const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
-  
+
   const { theme } = useTheme();
-  
+
   if (!forecast) return null;
 
 
@@ -216,18 +218,15 @@ const ForecastChart: React.FC<ForecastChartProps> = ({ forecast }) => {
   return (
     <div>
       <div className="chart-container">
-        {/* <h3>Temperature Forecast</h3> */}
         <Line data={tempData} options={tempOptions} />
       </div>
-      { precipitation.some(Boolean) &&
+      {precipitation.some(Boolean) &&
         <div className="chart-container">
-          {/* <h3>Chance of Precipitation</h3> */}
           <Bar data={precipitationData} options={precipitationOptions} />
         </div>
       }
-      { snowfall.some(Boolean) &&
+      {snowfall.some(Boolean) &&
         <div className="chart-container">
-          {/* <h3>Snowfall Forecast</h3> */}
           <Bar data={snowfallData} options={snowfallOptions} />
         </div>
       }

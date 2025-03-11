@@ -2,7 +2,7 @@ import { CSSProperties } from "react";
 import { useTheme } from "../context/ThemeContext";
 
 const ThemeToggle = () => {
-  const {theme, toggleTheme} = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   const buttonStyle: CSSProperties = {
     position: "relative" as const,
@@ -41,7 +41,7 @@ const ThemeToggle = () => {
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
-              fill="none"
+              fill="#FBBF24"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"

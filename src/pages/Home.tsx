@@ -26,16 +26,16 @@ const Home = () => {
       {currentWeather && (
         <div className="current-weather">
           <h2>{locationName}, {country}</h2>
+          <p>{currentWeather.weather[0].description}</p>
           <div className="weather-info">
             {/* <img 
               src={`https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`} 
               alt={currentWeather.weather[0].description}
             /> */}
-            <WeatherIcon iconCode={currentWeather.weather[0].icon} description={currentWeather.weather[0].description}/>
+            <WeatherIcon iconCode={currentWeather.weather[0].icon} description={currentWeather.weather[0].description} />
             <div>
-              <h3>{Math.round(currentWeather.main.temp)}°F</h3>
+              <div className="current-temp">{Math.round(currentWeather.main.temp)}°F</div>
               <p>L: {Math.round(currentWeather.main.temp_min)}° H:{Math.round(currentWeather.main.temp_max)}°</p>
-              <p>{currentWeather.weather[0].description}</p>
             </div>
           </div>
         </div>
@@ -45,15 +45,12 @@ const Home = () => {
         <p>Loading...</p>
       ) : (
         forecast && (
-          <>
-            {/* <h2>{locationName}{country && <span>, {country}</span>}</h2> Display the location name */}
-            <div className="chart-container-wrapper">
-              <ForecastChart forecast={forecast} />
-            </div>
-          </>
+          <div className="chart-container-wrapper">
+            <ForecastChart forecast={forecast} />
+          </div>
         )
       )}
-      <Analytics/>
+      <Analytics />
     </div>
   );
 };

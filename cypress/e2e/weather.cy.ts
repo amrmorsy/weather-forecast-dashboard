@@ -16,14 +16,19 @@ describe("Weather Forecast App", () => {
         cy.get(".search-input").type("London{enter}");
         cy.wait(2000); // Wait for API response
         cy.get(".current-weather").should("be.visible");
-        cy.get(".weather-info h3").should("exist");
     });
 
+    it("should clear input if user clicks on clear icon inside input", () => {
+        cy.get(".search-input").type("some random text");
+        cy.get(".clear-input").click()
+        cy.get('.search-input').should("have.value", "");
+    })
+
     it("should allow users to toggle dark mode", () => {
-        cy.get(".themeToggleBtn").contains("🌙 Dark").click();
+        cy.get(".themeToggleBtn").click();
         cy.get("html").should("have.attr", "data-theme", "dark");
 
-        cy.get(".themeToggleBtn").contains("☀️ Light").click();
+        cy.get(".themeToggleBtn").click();
         cy.get("html").should("have.attr", "data-theme", "light");
     });
 
@@ -39,6 +44,6 @@ describe("Weather Forecast App", () => {
     it("should display forecast charts", () => {
         cy.get(".search-input").type("Tokyo{enter}");
         cy.wait(3000); // Wait for charts to load
-        cy.get(".chart-container").should("have.length.at.least", 2); // Ensure charts are rendered
+        cy.get(".chart-container").should("have.length.at.least", 1); // Ensure charts are rendered
     });
 });

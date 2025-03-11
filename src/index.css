@@ -20,7 +20,7 @@
 
 /* Global styles */
 body {
-  font-family: Arial, sans-serif;
+  font-family: monospace, sans-serif;
   margin: 0;
   padding: 20px;
   background-color: var(--bg-color);
@@ -29,18 +29,17 @@ body {
   display: block;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   text-align: center;
 }
 
 h1 {
-  padding-top: 50px;
+  padding-top: 70px;
 }
 
 .container {
   position: relative;
-  width: 100%;
-  max-width: 95vw;
+  /* width: 100%; */
+  max-width: 800px;
   margin-top: 20px;
   margin-bottom: 20px;
   background: var(--container-bg);
@@ -54,23 +53,58 @@ h1 {
   right: 20px;
 }
 
-/* Input and Button */
+/* Search */
 .search-container {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
   gap: 10px;
   margin-bottom: 15px;
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+  }
+  .clear-input {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    width: 30px;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: gray;
+    cursor: pointer;
+    display: inline-block;
+  }
 }
 
 .search-input {
   padding: 10px;
   border: 1px solid #ccc;
+  padding: 8px 35px;
+  width: 100%;
+  caret-color: #5a1d07; /* Change color */
+  font-size: 18px; /* Increase font size to make caret bigger */
+  line-height: 2; /* Adjust vertical alignment */
+  font-family: monospace;
+  font-weight: 600;
+
+  &::placeholder {
+    font-weight: lighter;
+    opacity: 0.5;
+  }
 }
 
 .suggestions-list {
   position: absolute;
-  top: 50px;
+  top: 60px;
   width: 100%;
   background: var(--container-bg);
   border: 1px solid #ccc;
@@ -98,6 +132,14 @@ h1 {
 .weather-icon {
   max-width: 30%;
   margin: 0 auto;
+}
+
+.weather-info {
+  margin-bottom: 50px;
+}
+
+.current-temp {
+  font-size: 60px;
 }
 
 input {
@@ -136,13 +178,17 @@ button:hover {
 }
 
 .geo-location-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: -15px;
+  cursor: pointer;
+  padding: 5px;
 }
 
 /* Responsive Layout */
 @media (min-width: 768px) {
   .container {
-    max-width: 800px;
     padding: 20px 20px;
   }
 
@@ -151,19 +197,11 @@ button:hover {
     width: 100%;
   }
 
-  body {
-    display: flex;
-    padding: 0px;
-  }
-
-  .search-container {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-  }
-
   button {
     width: auto;
+  }
+
+  h1 {
+    padding-top: 50px;
   }
 }
