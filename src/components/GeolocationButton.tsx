@@ -10,7 +10,9 @@ const GeolocationButton: React.FC<GeolocationButtonProps> = ({ onLocate }) => {
         height="20"
         viewBox="0 0 256 256"
         fill="#495561"
-        stroke="#FBBF24">
+        stroke="#FBBF24" aria-labelledby="iconTitle iconDesc">
+        <title id="iconTitle">Your Current Location</title>
+        <desc id="iconDesc">An illustraction of a current location icon</desc>
         <path d="M141.1 243.4 246 12.6 10 117.5h131.1v125.9z" />
       </svg>
     </div>
