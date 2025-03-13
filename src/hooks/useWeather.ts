@@ -27,8 +27,8 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
     setLoading(true);
     const fetchWeather = async () => {
       const url = city
-        ? `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&cnt=7&exclude=hourly,current,minutely&appid=${API_KEY}`
-        : `https://api.openweathermap.org/data/2.5/forecast?lat=${coords?.lat}&lon=${coords?.lon}&units=imperial&cnt=7&exclude=hourly,current,minutely&appid=${API_KEY}`;
+        ? `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&cnt=&exclude=hourly,current,minutely&appid=${API_KEY}`
+        : `https://api.openweathermap.org/data/2.5/forecast?lat=${coords?.lat}&lon=${coords?.lon}&units=imperial&cnt=&exclude=hourly,current,minutely&appid=${API_KEY}`;
 
 
       try {
