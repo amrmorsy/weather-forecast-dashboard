@@ -33,7 +33,12 @@ body {
 }
 
 h1 {
+  display: block;
   padding-top: 70px;
+  text-align: left;
+  font-size: 20px;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 .container {
@@ -63,7 +68,8 @@ h1 {
   align-items: center;
   flex: 1;
   gap: 10px;
-  margin-bottom: 15px;
+  max-width: 90%;
+  margin: 15px auto;
   .search-icon {
     position: absolute;
     left: 10px;
@@ -88,7 +94,7 @@ h1 {
 .search-input {
   padding: 10px;
   border: 1px solid #ccc;
-  padding: 8px 35px;
+  padding: 1px 35px;
   width: 100%;
   caret-color: #5a1d07; /* Change color */
   font-size: 18px; /* Increase font size to make caret bigger */
@@ -130,7 +136,7 @@ h1 {
 }
 
 .weather-icon {
-  max-width: 30%;
+  max-width: 50%;
   margin: 0 auto;
 }
 
@@ -174,16 +180,20 @@ button:hover {
   height: 500px;
   background: var(--chart-bg);
   border-radius: 8px;
-  margin-bottom: 80px;
+  margin-bottom: 38px;
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
 }
 
 .geo-location-btn {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: -15px;
   cursor: pointer;
-  padding: 5px;
+  padding: 10px;
+  background-color: #fff;
 }
 
 /* Responsive Layout */
@@ -203,5 +213,11 @@ button:hover {
 
   h1 {
     padding-top: 50px;
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .weather-icon {
+    max-width: 30%;
   }
 }
