@@ -10,6 +10,7 @@ interface WeatherData {
     temp_max: number; temp: number
   };
   name: string;
+  dt: number;
   sys: { country: string };
 }
 
@@ -20,6 +21,8 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
   const [loading, setLoading] = useState(false);
   const [locationName, setLocationName] = useState<string | null>(null); // Store city/location name
   const [country, setCountryName] = useState<string | null>(null); // Store country name
+  const [timezone, setTimezone] = useState<number | null>(null);
+  // const [coordinates, setCoordinates] = useState<{ lat: number; lon: number } | null>(coords || null);
 
   useEffect(() => {
     if (!city && !coords) return;
@@ -36,6 +39,7 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
         setForecast(data);
         setLocationName(data.city.name); // Extract the city name from API response
         setCountryName(data.city?.country ?? null);
+        setTimezone(data.city.timezone); // Get the timezone offset
 
         // Fetch current weather
         const currentWeatherUrl = city
@@ -44,7 +48,6 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
 
         const currentRes = await axios.get(currentWeatherUrl);
         setCurrentWeather(currentRes.data);
-
       } catch (error) {
         console.error("Error fetching weather:", error);
       } finally {
@@ -55,5 +58,5 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
     fetchWeather();
   }, [city, coords]);
 
-  return { forecast, currentWeather, loading, locationName, country }; // Return location name
+  return { forecast, currentWeather, loading, locationName, country, timezone }; // Return location name
 };
