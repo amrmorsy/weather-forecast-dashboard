@@ -55,7 +55,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
     if (e.key === "ArrowDown") {
       setSelectedIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
-    } else if (e.key === "ArrowUp") {
+    } else if (e.key === "ArrowUp" || (e.shiftKey && e.key === "Tab")) {
+      e.preventDefault();
       setSelectedIndex((prevIndex) => (prevIndex - 1 + suggestions.length) % suggestions.length);
     } else if (e.key === "Tab") {
       e.preventDefault(); // Prevent default tabbing behavior

@@ -58,5 +58,5 @@ export const useWeather = (city?: string, coords?: { lat: number; lon: number })
     fetchWeather();
   }, [city, coords]);
 
-  return { forecast, currentWeather, loading, locationName, country, timezone }; // Return location name
+  return { forecast, currentWeather, loading, locationName, country, timezone };
 };
