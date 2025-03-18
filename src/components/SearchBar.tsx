@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 
 
@@ -12,6 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [city, setCity] = useState("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch city suggestions from OpenWeather API
   const fetchSuggestions = async (query: string) => {
@@ -82,6 +83,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const clearInput = () => {
     setCity("");
     setSuggestions([]);
+    inputRef?.current?.focus();
   }
 
   return (
@@ -104,6 +106,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <input
         type="text"
         value={city}
+        ref={inputRef}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         placeholder="Enter City"
