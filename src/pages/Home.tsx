@@ -14,6 +14,8 @@ const Home = () => {
   const [localTime, setLocalTime] = useState<string>("");
   const geolocation = useGeolocation();
   const { forecast, currentWeather, loading, locationName, country, timezone } = useWeather(city, geolocation ?? undefined);
+  // State to control search input
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
 
@@ -33,13 +35,20 @@ const Home = () => {
 
   }, [timezone, currentWeather])
 
+  // Handle user location button
+  const handleLocate = () => {
+    // Clear search so it doesn't conflict with geolocation
+    setCity(undefined);
+    setSearchValue("");
+  };
+
   return (
     <div className="container">
       <h1>🌤 Weather Forecast</h1>
       <ThemeToggle />
       <div className="search-container">
-        <SearchBar onSearch={setCity} />
-        <GeolocationButton onLocate={() => setCity(undefined)} />
+        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} onSearch={(val) => setCity(val)} />
+        <GeolocationButton onLocate={handleLocate} />
       </div>
 
       {/* Show Current Weather Data */}

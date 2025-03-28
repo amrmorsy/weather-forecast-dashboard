@@ -5,11 +5,12 @@ import axios from "axios";
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
 interface SearchBarProps {
+  searchValue: string;
+  setSearchValue: (val: string) => void;
   onSearch: (city: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-  const [city, setCity] = useState("");
+const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, onSearch }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setCity(value);
+    setSearchValue(value)
     fetchSuggestions(value);
   };
 
@@ -63,9 +64,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       setSelectedIndex((prevIndex) => (prevIndex + 1) % suggestions.length);
     } else if (e.key === "Enter") {
       if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
-        handleSelect(suggestions[selectedIndex]);
+        const userSelected = suggestions[selectedIndex];
+        onSearch(userSelected);
+        setSearchValue(userSelected)
       } else {
-        onSearch(city);
+        onSearch(searchValue)
       }
       setSuggestions([]); // Close dropdown after selecting
     } else if (e.key == "Escape") {
@@ -73,16 +76,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     }
   };
 
-  // Handle suggestion click
   const handleSelect = (selectedCity: string) => {
-    setCity(selectedCity);
+    setSearchValue(selectedCity)
     setSuggestions([]);
     onSearch(selectedCity);
     setSelectedIndex(-1);
   };
 
   const clearInput = () => {
-    setCity("");
+    setSearchValue("");
     setSuggestions([]);
     inputRef?.current?.focus();
   }
@@ -106,7 +108,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       {/* Input Field */}
       <input
         type="text"
-        value={city}
+        value={searchValue}
         ref={inputRef}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
@@ -115,7 +117,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       />
 
       {/* Clear (X) Icon - Appears only when there is text */}
-      {city && (
+      {searchValue && (
         <button
           onClick={clearInput}
           className="clear-input"
