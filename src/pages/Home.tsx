@@ -27,10 +27,22 @@ const Home = () => {
       const utc = lt + localOffset
       const currentCityTime = new Date(utc + (1000 * timezone))
 
-      setLocalTime(currentCityTime.toLocaleString(navigator.language, {
-        dateStyle: "short",
-        timeStyle: "short"
-      }));
+      // Format date and time
+      const formattedDateTime = {
+        date: currentCityTime.toLocaleDateString(navigator.language, {
+          weekday: 'short',
+          month: 'short',
+          day: 'numeric'
+        }),
+        time: currentCityTime.toLocaleTimeString(navigator.language, {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        })
+      };
+
+      // Set formatted time for display
+      setLocalTime(`${formattedDateTime.date} • ${formattedDateTime.time}`);
     }
 
   }, [timezone, currentWeather])
@@ -54,23 +66,31 @@ const Home = () => {
       {/* Show Current Weather Data */}
       {currentWeather && (
         <div className="current-weather">
-          <h2>{locationName}</h2>
-          <h3>{cityDetails?.state} {country}</h3>
-          {localTime && (
-            <p>{localTime}</p>
-          )}
-          <p>{currentWeather.weather[0].description}</p>
-          <div className="weather-info">
-            {/* <img 
-              src={`https://openweathermap.org/img/wn/${currentWeather.weather[0].icon}@2x.png`} 
-              alt={currentWeather.weather[0].description}
-            /> */}
-            <WeatherIcon iconCode={currentWeather.weather[0].icon} description={currentWeather.weather[0].description} />
-            <div>
-              <div className="current-temp">{Math.round(currentWeather.main.temp)}°F</div>
-              <p>L: {Math.round(currentWeather.main.temp_min)}° H:{Math.round(currentWeather.main.temp_max)}°</p>
-            </div>
+          <div className="location-info">
+            <h2>{locationName}</h2>
+            <h3>{cityDetails?.state && <span>{cityDetails.state}, </span>}{country}</h3>
+            {localTime && <p className="local-time">{localTime}</p>}
           </div>
+
+          {currentWeather.weather && currentWeather.weather[0] && (
+            <>
+              <p className="weather-description">{currentWeather.weather[0].description}</p>
+              <div className="weather-info">
+                <WeatherIcon
+                  iconCode={currentWeather.weather[0].icon}
+                  description={currentWeather.weather[0].description}
+                />
+                <div className="temperature-container">
+                  <div className="current-temp">
+                    {Math.round(currentWeather.main?.temp || 0)}°F
+                  </div>
+                  <p className="temp-range">
+                    L: {Math.round(currentWeather.main?.temp_min || 0)}°F &nbsp;H: {Math.round(currentWeather.main?.temp_max || 0)}°F
+                  </p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
       )}
 
