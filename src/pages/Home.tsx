@@ -7,13 +7,13 @@ import GeolocationButton from "../components/GeolocationButton";
 import ThemeToggle from "../components/ThemeToggle";
 import WeatherIcon from '../components/WeatherIcon';
 import { Analytics } from '@vercel/analytics/react';
-
+import { CityDetails } from "../types/CityDetails";
 
 const Home = () => {
-  const [city, setCity] = useState<string | undefined>(undefined);
+  const [cityDetails, setCityDetails] = useState<CityDetails | undefined>(undefined);
   const [localTime, setLocalTime] = useState<string>("");
   const geolocation = useGeolocation();
-  const { forecast, currentWeather, loading, locationName, country, timezone } = useWeather(city, geolocation ?? undefined);
+  const { forecast, currentWeather, loading, locationName, country, timezone } = useWeather(cityDetails, geolocation ?? undefined);
   // State to control search input
   const [searchValue, setSearchValue] = useState("");
 
@@ -38,7 +38,7 @@ const Home = () => {
   // Handle user location button
   const handleLocate = () => {
     // Clear search so it doesn't conflict with geolocation
-    setCity(undefined);
+    setCityDetails(undefined);
     setSearchValue("");
   };
 
@@ -47,14 +47,15 @@ const Home = () => {
       <h1>🌤 Weather Forecast</h1>
       <ThemeToggle />
       <div className="search-container">
-        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} onSearch={(val) => setCity(val)} />
+        <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} onSearch={(val) => setCityDetails(val)} />
         <GeolocationButton onLocate={handleLocate} />
       </div>
 
       {/* Show Current Weather Data */}
       {currentWeather && (
         <div className="current-weather">
-          <h2>{locationName}, {country}</h2>
+          <h2>{locationName}</h2>
+          <h3>{cityDetails?.state} {country}</h3>
           {localTime && (
             <p>{localTime}</p>
           )}

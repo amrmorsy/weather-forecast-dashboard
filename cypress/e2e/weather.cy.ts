@@ -9,7 +9,8 @@ describe("Weather Forecast App", () => {
 
     it("should allow users to search for a city", () => {
         cy.get(".search-input").type("Los Angeles, California{downArrow}").type("{enter}");
-        cy.contains("Los Angeles, California, US").should("be.visible");
+        cy.contains("Los Angeles").should("be.visible");
+        cy.contains("California US").should("be.visible");
     });
 
     it("should display weather data after search", () => {

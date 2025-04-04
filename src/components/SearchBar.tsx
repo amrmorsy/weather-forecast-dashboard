@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import { CityDetails } from "../types/CityDetails";
 
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
@@ -7,12 +8,13 @@ const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 interface SearchBarProps {
   searchValue: string;
   setSearchValue: (val: string) => void;
-  onSearch: (city: string) => void;
+  onSearch: (cityDetails: CityDetails) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, onSearch }) => {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [cityDetails, setCityDetails] = useState<CityDetails[]>([])
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Fetch city suggestions from OpenWeather API
@@ -29,13 +31,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, onSe
 
       if (response.data) {
         setSuggestions(
-          response.data.map((item: any) =>
+          response.data.map((item: CityDetails) =>
             `${item.name}, ` +
             (item?.state && item.state !== item.name ? `${item.state}, ` : '') +
             `${item.country}`
           )
         );
-
+        setCityDetails(response.data);
         setSelectedIndex(-1); // Reset selection index when new suggestions appear
       }
     } catch (error) {
@@ -65,10 +67,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, onSe
     } else if (e.key === "Enter") {
       if (selectedIndex >= 0 && selectedIndex < suggestions.length) {
         const userSelected = suggestions[selectedIndex];
-        onSearch(userSelected);
+        onSearch(cityDetails[selectedIndex]);
         setSearchValue(userSelected)
       } else {
-        onSearch(searchValue)
+        onSearch(cityDetails[0])
       }
       setSuggestions([]); // Close dropdown after selecting
     } else if (e.key == "Escape") {
@@ -76,10 +78,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, onSe
     }
   };
 
-  const handleSelect = (selectedCity: string) => {
+  const handleSelect = (selectedCity: string, selectedIndex: number) => {
     setSearchValue(selectedCity)
     setSuggestions([]);
-    onSearch(selectedCity);
+    onSearch(cityDetails[selectedIndex]);
     setSelectedIndex(-1);
   };
 
@@ -142,7 +144,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue, setSearchValue, onSe
             <li
               key={index}
               className={index === selectedIndex ? "selected" : ""}
-              onClick={() => handleSelect(suggestion)}
+              onClick={() => handleSelect(suggestion, index)}
             >
               {suggestion}
             </li>
